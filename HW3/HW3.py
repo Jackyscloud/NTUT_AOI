@@ -45,26 +45,38 @@ def mat_calc(array, number):
 
 def plot_hist(All_interval, RGB):
 
-    plt.figure(figsize=(15, 5))
+    plt.figure(figsize=(15, 15))
 
     # Plotting the histogram
-    plt.subplot(1, 3, 1)
+    plt.subplot(2, 3, 1)
     plt.bar(range(len(All_interval)), RGB.R_SplitN, tick_label=[f"{max - All_interval[0]}-{max}" for max in All_interval], color='red')
     plt.xlabel('Intervals')
     plt.ylabel('Number of elements')
     plt.title('Element Distribution in Red Channel')
     
-    plt.subplot(1, 3, 2)
+    plt.subplot(2, 3, 2)
     plt.bar(range(len(All_interval)), RGB.G_SplitN, tick_label=[f"{max - All_interval[0]}-{max}" for max in All_interval], color='green')
     plt.xlabel('Intervals')
     plt.ylabel('Number of elements')
     plt.title('Element Distribution in Green Channel')
 
-    plt.subplot(1, 3, 3)
+    plt.subplot(2, 3, 3)
     plt.bar(range(len(All_interval)), RGB.B_SplitN, tick_label=[f"{max - All_interval[0]}-{max}" for max in All_interval], color='blue')
     plt.xlabel('Intervals')
     plt.ylabel('Number of elements')
     plt.title('Element Distribution in Blue Channel')
+
+    plt.subplot(2, 3, 4)
+    rgb_image = np.stack((RGB.R, RGB.G, RGB.B), axis=-1)
+    plt.imshow(rgb_image)
+    plt.title('Orignal Image')
+    plt.colorbar()
+
+    plt.subplot(2, 3, 6)
+    rgb_image = np.stack((RGB.R_N, RGB.G_N, RGB.B), axis=-1)
+    plt.imshow(rgb_image)
+    plt.title('Processed Image')
+    plt.colorbar()
     
     plt.tight_layout()
     plt.show()
@@ -93,6 +105,8 @@ def split_count(split, array):
         if max > 255:
             max = 255
         All_interval.append(max)
+
+    print(All_interval)
 
     return All_interval, count(All_interval, array)
 
